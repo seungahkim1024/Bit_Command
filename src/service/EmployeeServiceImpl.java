@@ -2,20 +2,23 @@ package service;
 
 import java.util.List;
 
+import dao.EmployeeDAOImpl;
 import domain.EmployeeDTO;
 
 public class EmployeeServiceImpl implements EmployeeService {
 	
 	private static EmployeeServiceImpl instance = new EmployeeServiceImpl();
-	private EmployeeServiceImpl(){}
+	private EmployeeServiceImpl(){dao = EmployeeDAOImpl.getInstance();}
 	public static EmployeeServiceImpl getInstance() {
 	return instance;
 	}
 	
+	EmployeeDAOImpl dao;
+	
 	@Override
 	public void registEmployee(EmployeeDTO emp) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("employeeimpl 진입!!!");
+		dao.insertEmployee(emp);
 	}
 
 

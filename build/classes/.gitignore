@@ -1,5 +1,3 @@
-/command/
+/factory/
 /controller/
-/enums.class
-/enums/
-/Snippet.class
+/command/

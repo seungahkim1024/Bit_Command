@@ -24,11 +24,13 @@ public class HomeController extends HttpServlet {
 		session.setAttribute("css", session.getAttribute("ctx")+"/resources/css/");
 		session.setAttribute("js", session.getAttribute("ctx")+"/resources/js/");
 		EmployeeDTO e = (EmployeeDTO)session.getAttribute("admin");
+		
 		if(e==null){
 			request.setAttribute("compo", "pre");
 		}else{
 			request.setAttribute("compo", "post");
 		}
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/home/main.jsp");
 		rd.forward(request, response);
 		
