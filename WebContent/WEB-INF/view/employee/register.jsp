@@ -8,8 +8,8 @@
 <div class="grid-item" id="content">
 <form id="form" name="form" >
 	<div class="grid-container">
-	    <div class="grid-item" id="item_1">사원번호</div>
-	    <div class="grid-item" id="item_2"><input type="text" id="empno" name="empno" ></div>
+	    <div class="grid-item" id="item_1">사진</div>
+	    <div class="grid-item" id="item_2"><input type="text" id="photo" name="photo" ></div>
 	    <div class="grid-item" id="item_3">이 름</div>
 	    <div class="grid-item" id="item_4"><input type="text" id="name" name="name" ></div>
 	    <div class="grid-item" id="item_5">매니저</div>
