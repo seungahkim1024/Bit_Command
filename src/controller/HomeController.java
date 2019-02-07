@@ -18,7 +18,6 @@ public class HomeController extends HttpServlet {
        
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("=====홈 컨트롤러!!!!");
-		
 		HttpSession session = request.getSession();
 		session.setAttribute("ctx", request.getContextPath());
 		session.setAttribute("css", session.getAttribute("ctx")+"/resources/css/");

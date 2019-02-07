@@ -1,4 +1,3 @@
-/command/
-/controller/
-/enums/
 /dao/
+/enums/
+/factory/

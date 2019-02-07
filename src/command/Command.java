@@ -12,16 +12,21 @@ public class Command implements Order{
 	
 	public Command(HttpServletRequest request, HttpServletResponse response){
 		setRequest(request);
+		System.out.println("=== 5.뷰가 세팅 ===");
+		setAction(request.getParameter("cmd"));
+		String dir =request.getParameter("dir");
+		if(dir==null){
+			setDomain(request.getServletPath().split("/")[1].replace(".do", ""));
+		}else{
+		setDomain(dir);
+		}
+		setPage(request.getParameter("page"));
 		execute();
 	}
 	public Command() {}
 	
 	@Override
 	public void execute() {
-		System.out.println("=== 5.뷰가 세팅 ===");
-		setAction(request.getParameter("cmd"));
-		setDomain(request.getServletPath().split("/")[1].replace(".do", ""));
-		setPage(request.getParameter("page"));
 		this.view = "/WEB-INF/view/"+domain+"/"+page+".jsp";
 	}
 }

@@ -11,7 +11,7 @@ public interface EmployeeDAO {
 	public List<EmployeeDTO> selectEmployees(String searchWord);
 	public EmployeeDTO selectEmployee(String searchWord);
 	public int countEmployees();
-	public boolean existsEmployee(String searchWord);
+	public boolean existsEmployee(EmployeeDTO emp);
 	public void updateEmployee(EmployeeDTO emp);
 	public void deleteEmployee(EmployeeDTO emp);
 }

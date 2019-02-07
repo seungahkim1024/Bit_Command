@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import command.Carrier;
+import command.Receiver;
 import service.CustomerService;
 import service.CustomerServiceImpl;
 
@@ -18,8 +20,9 @@ public class CustomerController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("===== customer컨트롤러!!!");
 		
-		request.getRequestDispatcher("/WEB-INF/view/customer/customer_list.jsp")
-		.forward(request, response);
+		Receiver.init(request, response);
+		Carrier.forward(request, response);
+		
 	}
 
 }

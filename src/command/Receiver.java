@@ -9,5 +9,6 @@ public class Receiver {
 			HttpServletResponse response){
 		System.out.println("== 2.리시버진입 ==");
 		cmd = Commander.order(request,response);
+		System.out.println("Receiver 내부: "+Receiver.cmd.getView());
 	}
 }

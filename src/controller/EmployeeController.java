@@ -22,15 +22,6 @@ public class EmployeeController extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("=== 1.컨트롤러  진입 ===");
 		Receiver.init(request, response); //-> 이걸로인해 다섯군데를 돌아다니며 view가 셋팅 끝.
-		
-		switch(Action.valueOf(request.getParameter("cmd").toUpperCase())){
-			case MOVE:
-			Carrier.forward(request, response);
-			break;
-		case REGISTER:
-			System.out.println("register 진입!!!");
-			Carrier.forward(request, response);
-			break;
-		}
+		Carrier.forward(request, response);
 	}	
 }
