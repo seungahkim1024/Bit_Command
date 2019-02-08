@@ -9,9 +9,9 @@ public interface CustomerDAO {
 	public void insertCustomer(CustomerDTO cus);
 	public List<CustomerDTO> selectCustomerList();
 	public List<CustomerDTO> selectCustomers(String searchWord);
-	public CustomerDTO selectCustomer(String searchWord);
+	public CustomerDTO selectCustomer(CustomerDTO cus);
 	public int countCustomer();
-	public boolean existsCustomer(CustomerDTO cus);
+	public boolean existsCustomerID(CustomerDTO cus);
 	public void updateCustomer();
 	public void deleteCustomer();
 }

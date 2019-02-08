@@ -8,11 +8,11 @@ import domain.CustomerDTO;
 public class CustomerServiceImpl implements CustomerService{
 	
 	private static CustomerServiceImpl instance = new CustomerServiceImpl();
+	CustomerDAOImpl dao;
 	private CustomerServiceImpl (){dao = CustomerDAOImpl.getInstance();}
 	public static CustomerServiceImpl getInstance() {
 		return instance;
 	}
-	CustomerDAOImpl dao;
 	
 	@Override
 	public void registCustomer(CustomerDTO cus) {
@@ -33,9 +33,9 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public CustomerDTO retrieveCustomer(String searchWord) {
-		// TODO Auto-generated method stub
-		return null;
+	public CustomerDTO retrieveCustomer(CustomerDTO cus) {
+		
+		return dao.selectCustomer(cus);
 	}
 
 	@Override
@@ -45,9 +45,9 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public boolean existsCustomer(CustomerDTO cus) {
+	public boolean existsCustomerID(CustomerDTO cus) {
 		
-		return dao.existsCustomer(cus);
+		return dao.existsCustomerID(cus);
 	}
 
 	@Override

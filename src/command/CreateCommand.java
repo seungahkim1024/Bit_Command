@@ -2,7 +2,6 @@ package command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
 
 import domain.CustomerDTO;
 import domain.EmployeeDTO;
@@ -30,14 +29,17 @@ public class CreateCommand extends Command{
 		System.out.println("createCommand의 signup!!!");
 		CustomerDTO cus = new CustomerDTO();
 		cus.setCustomerID(request.getParameter("id"));
-		cus.setCustomerName(request.getParameter("name"));
 		cus.setPassword(request.getParameter("pass"));
+		cus.setCustomerName(request.getParameter("name"));
 		cus.setSsn(request.getParameter("ssn"));
 		cus.setAddress(request.getParameter("address"));
 		cus.setCity(request.getParameter("city"));
 		cus.setPostalCode(request.getParameter("postalCode"));
+		System.out.println("커멘드 id==="+request.getParameter("id"));
 		CustomerServiceImpl.getInstance().registCustomer(cus);
 		break;
+		default:
+			break;
 		}		
 	}
 }

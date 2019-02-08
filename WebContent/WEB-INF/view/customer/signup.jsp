@@ -7,26 +7,42 @@
 </div>
 <div class="grid-item" id="content">
 <form id="form" name="form" >
-	<div class="grid-container">
-	    <div class="grid-item" id="item_1">ID</div>
-	    <div class="grid-item" id="item_2"><input type="text" id="id" name="id" ></div>
-	    <div class="grid-item" id="item_3">이름</div>
-	    <div class="grid-item" id="item_4"><input type="text" id="name" name="name" ></div>
-	    <div class="grid-item" id="item_5">비밀번호</div>
-	    <div class="grid-item" id="item_6"><input type="text" id="pass" name="pass" ></div>
-	    <div class="grid-item" id="item_7">주민번호</div>
-	    <div class="grid-item" id="item_8"><input type="text" id="ssn" name="ssn" ></div>
-	    <div class="grid-item" id="item_9">도로명</div>
-	    <div class="grid-item" id="item_10"><input type="text" id="address" name="address" ></div>
-	    <div class="grid-item" id="item_11">도시</div>
-	    <div class="grid-item" id="item_12"><input type="text" id="city" name="city" ></div>
-	    <div class="grid-item" id="item_13">우편번호</div>
-	    <div class="grid-item" id="item_14"><input type="text" id="postalCode" name="postalCode" ></div>
-	    <div class="grid-item" id="item_15"><input type="submit" id="confirm_btn" value='확 인'></div>
-	    <div class="grid-item" id="item_16"><input type="reset" id="cancel_btn" value='취 소'> </div>
-	    <input type="hidden" name="cmd" value="signup" />
+<div class="input-group">
+  <span class="input-group-addon" id="id">ID</span>
+  <input type="text" class="form-control" placeholder="10자이내" aria-describedby="basic-addon1" name = "id">
+</div>
+<div class="input-group">
+  <span class="input-group-addon" id="pass">비밀번호</span>
+  <input type="text" class="form-control" placeholder="PASSWORD" aria-describedby="basic-addon1" name="pass">
+</div>
+<div class="input-group">
+  <span class="input-group-addon" id="name" >이름</span>
+  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" name="name">
+</div>
+<div class="input-group">
+  <span class="input-group-addon" id="ssn" >주민번호</span>
+  <input type="text" class="form-control" placeholder="예: 911024-2" aria-describedby="basic-addon1" name="ssn">
+</div>
+<div class="input-group">
+  <span class="input-group-addon" id="address" >도로명</span>
+  <input type="text" class="form-control" placeholder="예: 길음로33" aria-describedby="basic-addon1" name="address">
+</div>
+<div class="input-group">
+  <span class="input-group-addon" id="city" >도시</span>
+  <input type="text" class="form-control" placeholder="예: 서울" aria-describedby="basic-addon1" name="city">
+</div>
+<div class="input-group">
+  <span class="input-group-addon" id="postalCode" >우편번호</span>
+  <input type="text" class="form-control" placeholder="postalCode" aria-describedby="basic-addon1" name="postalCode">
+</div>
+<button type="button" class="btn btn-default btn-lg" id="cancel_btn">
+  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> CANCLE
+</button>
+<button type="button" class="btn btn-default btn-lg" id="confirm_btn">
+  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> OK
+</button>
+		<input type="hidden" name="cmd" value="signup" />
 	    <input type="hidden" name="page" value="signin" />
-	</div>
 </form>
 </div>
 <jsp:include page="../home/bottom.jsp"/>

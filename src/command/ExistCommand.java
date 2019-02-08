@@ -2,6 +2,7 @@ package command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import domain.CustomerDTO;
 import domain.EmployeeDTO;
@@ -13,7 +14,7 @@ public class ExistCommand extends Command {
 	public ExistCommand(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
 		System.out.println("exist커멘드 진입!");
-
+		HttpSession session = request.getSession();
 		switch (Action.valueOf(request.getParameter("cmd").toUpperCase())) {
 		case ACCESS:
 			EmployeeDTO emp = new EmployeeDTO();
@@ -34,17 +35,22 @@ public class ExistCommand extends Command {
 			CustomerDTO cus = new CustomerDTO();
 			cus.setCustomerID(request.getParameter("id"));
 			cus.setPassword(request.getParameter("pass"));
-			exist = CustomerServiceImpl.getInstance().existsCustomer(cus);
-			if (exist) {
-				System.out.println("접근허용");
+			System.out.println("dto id==="+request.getParameter("id"));
+			System.out.println("dto pass==="+request.getParameter("pass"));
+			cus = CustomerServiceImpl.getInstance().retrieveCustomer(cus);
+			
+			if (cus!=null) {
+				System.out.println("로그인성공");
+				session.setAttribute("customer", cus);
 			} else {
-				System.out.println("접근불가");
-				super.setDomain("home");
-				super.setPage("main");
+				System.out.println("로그인실패");
+				super.setDomain("customer");
+				super.setPage("signin");
 				super.execute();
-				break;
 			}
-			System.out.println("existCommand 내부: " + super.getView());
+			break;
+		default:
+			break;
 		}
 	}
 }
