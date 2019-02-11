@@ -77,10 +77,12 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 			.createDatabase(Vendor.ORACLE)
 			.getConnection()
 			.prepareStatement(sql);
+			System.out.println("사번: "+emp.getEmployeeId());
+			System.out.println("이름: "+emp.getName());
 			ps.setString(1, emp.getEmployeeId());
 			ps.setString(2, emp.getName());
 			ResultSet rs = ps.executeQuery();
-			if(rs.equals("name")){
+			if(rs.next()){
 					ok = true;
 			}	
 		} catch (Exception e) {

@@ -3,3 +3,5 @@
 /factory/
 /command/
 /service/
+/domain/
+/sql/

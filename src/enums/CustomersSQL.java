@@ -1,7 +1,7 @@
 package enums;
 // employeeId, manager, name, birthDate, photo, notes
 public enum CustomersSQL {
-	SIGNUP, SIGNIN;
+	SIGNUP, SIGNIN, LIST;
 	
 	@Override
 	public String toString() {
@@ -14,7 +14,9 @@ public enum CustomersSQL {
 			query.append("SELECT CUSTOMER_ID, PASSWORD FROM CUSTOMERS "
 					+ "WHERE CUSTOMER_ID LIKE ? AND PASSWORD LIKE ?");
 			break;
-
+		case LIST:
+			query.append("SELECT * FROM CUSTOMERS");
+			break;
 		default:
 			break;
 		}

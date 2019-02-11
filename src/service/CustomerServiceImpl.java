@@ -22,14 +22,14 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public List<CustomerDTO> bringCustomerList() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return dao.selectCustomerList();
 	}
 
 	@Override
 	public List<CustomerDTO> retrieveCustomers(String searchWord) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return dao.selectCustomers(searchWord);
 	}
 
 	@Override

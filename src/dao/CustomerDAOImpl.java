@@ -3,7 +3,10 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.sun.org.apache.regexp.internal.recompile;
 
 import domain.CustomerDTO;
 import enums.CustomersSQL;
@@ -47,21 +50,38 @@ public class CustomerDAOImpl implements CustomerDAO{
 
 	@Override
 	public List<CustomerDTO> selectCustomerList() {
+		List<CustomerDTO> list = new ArrayList<>();
 		try {
-			String sql = "";
+			String sql = CustomersSQL.LIST.toString();
 			PreparedStatement ps = DatabaseFactory
 			.createDatabase(Vendor.ORACLE)
 			.getConnection()
 			.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				
+			CustomerDTO cus = null;
+			while(rs.next()){
+				cus = new CustomerDTO();
+				cus.setAddress(rs.getString("ADDRESS"));
+				cus.setCity(rs.getString("CITY"));
+				cus.setCustomerID(rs.getString("CUSTOMER_ID"));
+				cus.setCustomerName(rs.getString("CUSTOMER_NAME"));
+				cus.setPassword(rs.getString("PASSWORD"));
+				cus.setPhone(rs.getString("PHONE"));
+				cus.setPhoto(rs.getString("PHOTO"));
+				cus.setPostalCode(rs.getString("POSTAL_CODE"));
+				cus.setSsn(rs.getString("SSN"));
+				list.add(cus);
+				System.out.println("방금담은 값: "+rs.getString("CUSTOMER_NAME"));
 			}
+			System.out.println("1번회원 : "+rs.getString("CUSTOMER_NAME"));
+			System.out.println("2번회원 : "+rs.getString("CUSTOMER_NAME"));
+			System.out.println("3번회원 : "+rs.getString("CUSTOMER_NAME"));
+			System.out.println("4번회원 : "+rs.getString("CUSTOMER_NAME"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return dao.selectCustomerList();
+		return list;
 	}
 
 	@Override
