@@ -115,7 +115,10 @@ public class CustomerDAOImpl implements CustomerDAO{
 					.getConnection()
 					.prepareStatement(sql);
 			ps.setString(1, cus.getCustomerID());
-			if(cus.getPassword() != null) {
+			if(cus.getPassword()==null) {
+				ps.setString(1, cus.getCustomerID());
+			}else {
+				ps.setString(1, cus.getCustomerID());
 				ps.setString(2, cus.getPassword());
 			}
 			ResultSet rs = ps.executeQuery();
@@ -126,7 +129,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 				temp.setCustomerID(rs.getString("CUSTOMER_ID"));
 				temp.setCustomerName(rs.getString("CUSTOMER_NAME"));
 				temp.setPassword(rs.getString("PASSWORD"));
-				temp.setPostalCode(rs.getString("POSTALCODE"));
+				temp.setPostalCode(rs.getString("POSTAL_CODE"));
 				temp.setSsn(rs.getString("SSN"));
 
 			}
