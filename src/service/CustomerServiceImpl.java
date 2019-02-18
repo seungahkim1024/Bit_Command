@@ -1,9 +1,11 @@
 package service;
 
 import java.util.List;
+import java.util.Map;
 
 import dao.CustomerDAOImpl;
 import domain.CustomerDTO;
+import proxy.Proxy;
 
 public class CustomerServiceImpl implements CustomerService{
 	
@@ -21,15 +23,15 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public List<CustomerDTO> bringCustomerList() {
-		
-		return dao.selectCustomerList();
+	public List<CustomerDTO> bringCustomerList(Proxy pxy) {
+				
+		return dao.selectCustomerList(pxy);
 	}
 
 	@Override
-	public List<CustomerDTO> retrieveCustomers(String searchWord) {
+	public List<CustomerDTO> retrieveCustomers(Proxy pxy) {
 		
-		return dao.selectCustomers(searchWord);
+		return dao.selectCustomers(pxy);
 	}
 
 	@Override
@@ -39,9 +41,9 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public int countCustomers() {
+	public int countCustomers(Proxy pxy) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.countCustomer(pxy);
 	}
 
 	@Override
@@ -52,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public void modifyCustomer(CustomerDTO cus) {
-		// TODO Auto-generated method stub
+		dao.updateCustomer(cus);
 		
 	}
 
@@ -61,5 +63,9 @@ public class CustomerServiceImpl implements CustomerService{
 		// TODO Auto-generated method stub
 		
 	}
-
+	@Override
+	public Map<String, Object> retrievePhone(Proxy pxy) {
+		
+		return dao.selectPhone(pxy);
+	}
 }

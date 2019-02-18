@@ -2,17 +2,18 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import com.sun.org.apache.regexp.internal.recompile;
+import java.util.Map;
 
 import domain.CustomerDTO;
 import enums.CustomersSQL;
-import enums.EmployeeSQL;
 import enums.Vendor;
 import factory.DatabaseFactory;
+import proxy.PageProxy;
+import proxy.Pagination;
+import proxy.Proxy;
 
 public class CustomerDAOImpl implements CustomerDAO{
 	
@@ -49,18 +50,22 @@ public class CustomerDAOImpl implements CustomerDAO{
 	}
 
 	@Override
-	public List<CustomerDTO> selectCustomerList() {
+	public List<CustomerDTO> selectCustomerList(Proxy pxy) {
 		List<CustomerDTO> list = new ArrayList<>();
 		try {
+			Pagination page =  ((PageProxy)pxy).getPage();
 			String sql = CustomersSQL.LIST.toString();
 			PreparedStatement ps = DatabaseFactory
 			.createDatabase(Vendor.ORACLE)
 			.getConnection()
 			.prepareStatement(sql);
+			ps.setString(1, String.valueOf(page.getStartRow()));
+			ps.setString(2, String.valueOf(page.getEndRow()));
 			ResultSet rs = ps.executeQuery();
 			CustomerDTO cus = null;
 			while(rs.next()){
 				cus = new CustomerDTO();
+				cus.setNo(rs.getString("RNUM"));
 				cus.setAddress(rs.getString("ADDRESS"));
 				cus.setCity(rs.getString("CITY"));
 				cus.setCustomerID(rs.getString("CUSTOMER_ID"));
@@ -71,12 +76,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 				cus.setPostalCode(rs.getString("POSTAL_CODE"));
 				cus.setSsn(rs.getString("SSN"));
 				list.add(cus);
-				System.out.println("방금담은 값: "+rs.getString("CUSTOMER_NAME"));
 			}
-			System.out.println("1번회원 : "+rs.getString("CUSTOMER_NAME"));
-			System.out.println("2번회원 : "+rs.getString("CUSTOMER_NAME"));
-			System.out.println("3번회원 : "+rs.getString("CUSTOMER_NAME"));
-			System.out.println("4번회원 : "+rs.getString("CUSTOMER_NAME"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,7 +85,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 	}
 
 	@Override
-	public List<CustomerDTO> selectCustomers(String searchWord) {
+	public List<CustomerDTO> selectCustomers(Proxy pxy) {
 		try {
 			String sql = "";
 			PreparedStatement ps = DatabaseFactory
@@ -100,31 +100,35 @@ public class CustomerDAOImpl implements CustomerDAO{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return dao.selectCustomers(searchWord);
+		return dao.selectCustomers(pxy);
 	}
 
 	@Override
 	public CustomerDTO selectCustomer(CustomerDTO cus) {
 		CustomerDTO temp = null;
-		System.out.println("셀렉트커스토머 입장!!");
 		try {
+			String sql = (cus.getPassword() == null) ?
+				 CustomersSQL.CUS_RETRIEVE.toString() :
+				 CustomersSQL.SIGNIN.toString();	
 			PreparedStatement ps = DatabaseFactory
-			.createDatabase(Vendor.ORACLE)
-			.getConnection()
-			.prepareStatement(CustomersSQL.SIGNIN.toString());
+					.createDatabase(Vendor.ORACLE)
+					.getConnection()
+					.prepareStatement(sql);
 			ps.setString(1, cus.getCustomerID());
-			ps.setString(2, cus.getPassword());
+			if(cus.getPassword() != null) {
+				ps.setString(2, cus.getPassword());
+			}
 			ResultSet rs = ps.executeQuery();
-			System.out.println("daoImpl===="+cus.getCustomerID());
 			while (rs.next()) {
 				temp = new CustomerDTO();
-				temp.setAddress("ADDRESS");
-				temp.setCity("CITY");
-				temp.setCustomerID("CUSTOMER_ID");
-				temp.setCustomerName("CUSTOMER_NAME");
-				temp.setPassword("PASSWORD");
-				temp.setPostalCode("POSTAL_CODE");
-				temp.setSsn("SSN");
+				temp.setAddress(rs.getString("ADDRESS"));
+				temp.setCity(rs.getString("CITY"));
+				temp.setCustomerID(rs.getString("CUSTOMER_ID"));
+				temp.setCustomerName(rs.getString("CUSTOMER_NAME"));
+				temp.setPassword(rs.getString("PASSWORD"));
+				temp.setPostalCode(rs.getString("POSTALCODE"));
+				temp.setSsn(rs.getString("SSN"));
+
 			}
 		} catch (Exception e) {
 			
@@ -134,22 +138,24 @@ public class CustomerDAOImpl implements CustomerDAO{
 	}
 
 	@Override
-	public int countCustomer() {
+	public int countCustomer(Proxy pxy) {
+		int count = 0;
 		try {
-			String sql = "";
+			String sql = CustomersSQL.ROW_COUNT.toString();
 			PreparedStatement ps = DatabaseFactory
 			.createDatabase(Vendor.ORACLE)
 			.getConnection()
 			.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
-				
+			if(rs.next()){
+				count = rs.getInt("COUNT");
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return countCustomer();
+		System.out.println("총 고객수: "+count);
+		return count;
 	}
 
 	@Override
@@ -176,15 +182,22 @@ public class CustomerDAOImpl implements CustomerDAO{
 	}
 
 	@Override
-	public void updateCustomer() {
+	public void updateCustomer(CustomerDTO cus) {
+		
 		try {
-			String sql = "";
+			String sql = CustomersSQL.UPDATE.toString();
 			PreparedStatement ps = DatabaseFactory
 			.createDatabase(Vendor.ORACLE)
 			.getConnection()
 			.prepareStatement(sql);
-			ps.setString(1, "");
-			ps.executeUpdate();
+			ps.setString(1, cus.getPhone());
+			ps.setString(2, cus.getCity());
+			ps.setString(3, cus.getAddress());
+			ps.setString(4, cus.getPostalCode());
+			ps.setString(5, cus.getPassword());
+			ps.setString(6, cus.getCustomerID());
+			int rs = ps.executeUpdate();
+			System.out.println((rs==1) ? "입력 성공":"입력 실패");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -205,5 +218,30 @@ public class CustomerDAOImpl implements CustomerDAO{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	@Override
+	public Map<String, Object> selectPhone(Proxy pxy) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			String sql = CustomersSQL.PHONE.toString();
+			PreparedStatement ps = DatabaseFactory
+			.createDatabase(Vendor.ORACLE)
+			.getConnection()
+			.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			CustomerDTO cus = null;
+			while(rs.next()){ //while은 이터레이터(rs.next()는 이터레이터 패턴!) 쓸 때, for는 loop 돌 때!
+				cus = new CustomerDTO();
+				String entry = rs.getString("CUSTOMER_ID");
+				cus.setCustomerID(rs.getString("CUSTOMER_ID"));
+				cus.setCustomerName(rs.getString("CUSTOMER_NAME"));
+				cus.setPhone(rs.getString("PHONE"));
+				map.put(entry, cus);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return map;
 	}
 }

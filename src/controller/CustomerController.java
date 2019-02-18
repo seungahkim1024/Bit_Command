@@ -17,9 +17,9 @@ import service.CustomerServiceImpl;
 public class CustomerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	CustomerService service = CustomerServiceImpl.getInstance();
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("===== customer컨트롤러!!!");
-		
+	protected void service (HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		System.out.println("===== 1. customer컨트롤러!!!");
 		Receiver.init(request, response);
 		Carrier.forward(request, response);
 		

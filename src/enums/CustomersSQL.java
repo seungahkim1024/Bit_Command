@@ -1,7 +1,7 @@
 package enums;
 // employeeId, manager, name, birthDate, photo, notes
 public enum CustomersSQL {
-	SIGNUP, SIGNIN, LIST;
+	SIGNUP, SIGNIN, LIST, ROW_COUNT, PHONE, CUS_RETRIEVE, UPDATE;
 	
 	@Override
 	public String toString() {
@@ -15,7 +15,26 @@ public enum CustomersSQL {
 					+ "WHERE CUSTOMER_ID LIKE ? AND PASSWORD LIKE ?");
 			break;
 		case LIST:
-			query.append("SELECT * FROM CUSTOMERS");
+			query.append("SELECT T2.*\n" + 
+                    "FROM(SELECT ROWNUM R2,T.*\n" + 
+                    "        FROM (SELECT ROWNUM RNUM ,C.* \n" + 
+                    "        FROM CUSTOMERS C  \n" + 
+                    "        ORDER BY RNUM DESC) T) T2  \n" + 
+                    "WHERE R2 BETWEEN ? AND ? \n");
+			break;
+		case ROW_COUNT:
+			query.append("SELECT COUNT(*) COUNT FROM CUSTOMERS");
+			break;
+		case PHONE:
+			query.append("SELECT CUSTOMER_ID, CUSTOMER_NAME, PHONE FROM CUSTOMERS");
+			break;
+		case CUS_RETRIEVE:
+			query.append("SELECT * \n"
+					+ "FROM CUSTOMERS \n"
+					+ "WHERE CUSTOMER_ID LIKE ? \n");
+			break;
+		case UPDATE:
+			query.append("UPDATE CUSTOMERS SET PHONE =?,  CITY =?, ADDRESS=?, POSTAL_CODE=?, PASSWORD=? WHERE CUSTOMER_ID = ?");
 			break;
 		default:
 			break;
