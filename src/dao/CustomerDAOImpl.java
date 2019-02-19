@@ -1,16 +1,20 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import domain.CustomerDTO;
+import domain.ImageDTO;
 import enums.CustomersSQL;
 import enums.Vendor;
 import factory.DatabaseFactory;
+import proxy.ImageProxy;
 import proxy.PageProxy;
 import proxy.Pagination;
 import proxy.Proxy;
@@ -18,7 +22,12 @@ import proxy.Proxy;
 public class CustomerDAOImpl implements CustomerDAO{
 	
 	private static CustomerDAOImpl instance = new CustomerDAOImpl();
-	private CustomerDAOImpl(){ dao = CustomerDAOImpl.getInstance();}
+	Connection conn;
+	private CustomerDAOImpl(){
+		conn = DatabaseFactory
+				.createDatabase(Vendor.ORACLE)
+				.getConnection();
+	}
 	public static CustomerDAOImpl getInstance() {
 		return instance;
 	}
@@ -246,5 +255,30 @@ public class CustomerDAOImpl implements CustomerDAO{
 			e.printStackTrace();
 		}
 		return map;
+	}
+	public CustomerDTO selectProfile(Proxy pxy) {
+		CustomerDTO cus = new CustomerDTO();
+		try {
+			ImageDAOImpl.getInstance()
+			.insertImage(((ImageProxy) pxy).getImg());
+
+			String imgSeq = ImageDAOImpl
+					.getInstance()
+					.lastimageSeq();
+			
+			String sql = "UPDATE CUSTOMERS SET PHOTO = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, imgSeq);
+			
+			sql = "";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, "");
+			ResultSet rs = ps.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cus;
+		
 	}
 }

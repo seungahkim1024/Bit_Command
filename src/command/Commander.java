@@ -15,7 +15,7 @@ public class Commander {
 		Command  cmd = null;
 		RequestProxy req = (RequestProxy)pxy.get("req");
 		HttpServletRequest request = req.getRequest();
-		System.out.println("커멘더 액션 "+Action.valueOf(request.getParameter("cmd").toUpperCase()));
+		System.out.println("커멘더 액션 "+request.getParameter("cmd"));
 		switch(Action.valueOf(request.getParameter("cmd").toUpperCase())){
 		case MOVE:
 			cmd = new Command(pxy);
@@ -36,6 +36,9 @@ public class Commander {
 		case CUST_UPDATE:
 			System.out.println("커멘더====CUST_UPDATE");
 			cmd = new UpdateCommand(pxy);
+			break;
+		case CUST_FILE_UPLOAD:
+			cmd = new FileCommand(pxy);
 			break;
 		default:
 			break;

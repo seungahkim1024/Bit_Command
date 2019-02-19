@@ -68,4 +68,8 @@ public class CustomerServiceImpl implements CustomerService{
 		
 		return dao.selectPhone(pxy);
 	}
+	@Override
+	public void fileUpload(Proxy pxy) {
+		
+	}
 }

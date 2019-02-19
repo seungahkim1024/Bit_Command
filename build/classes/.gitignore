@@ -1,6 +1,7 @@
-/proxy/
 /command/
 /enums/
-/dao/
-/service/
 /controller/
+/domain/
+/proxy/
+/service/
+/dao/

@@ -17,5 +17,6 @@
 	<classpathentry exported="true" kind="lib" path="C:/Users/hb1003/jee_workspace/jakarta-taglibs-standard-1.1.2/lib/jstl.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/hb1003/jee_workspace/jakarta-taglibs-standard-1.1.2/lib/standard.jar"/>
 	<classpathentry kind="lib" path="C:/Users/hb1003/jee_workspace/lombok.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/hb1003/jee_workspace/cos-26Dec2008/lib/cos.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

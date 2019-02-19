@@ -4,9 +4,10 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
-/*   width: 800px;  */
+ /*  width: 800px; */
   overflow: hidden;
-  
+  grid-column-start: 1;
+  grid-column-end: 5;
 }
 #navi_bar li {
   float: left;

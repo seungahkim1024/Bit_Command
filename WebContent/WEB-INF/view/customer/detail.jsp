@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
     
 <jsp:include page="../home/top.jsp"/>
+<jsp:include page="../employee/nav.jsp"/>
+
 <style>
 .mypage{
     display: grid;
@@ -23,10 +26,9 @@ grid-column-end:5;
 }
 .myphoto {
     display: grid;
-    grid-template-columns: auto auto auto auto;
     grid-gap: 1px;
     background-color: white;
-    padding: 50px;
+    padding: 20px;
     width: 300px;
     margin: auto;
     
@@ -36,20 +38,19 @@ grid-column-end:5;
     grid-column-end:4;
 }
 </style>
-<div class="grid-item" id="navi_bar">
-	<ul class="ul_navi_bar">
-                 <li ><a href="home.do">홈으로</a></li>
-                 <li ><a href="#">카테고리</a></li>
-                 <li ><a href="#">사원</a></li>
-                 <li ><a href="#">주문</a></li>
-                 <li ><a href="#">상품</a></li>
-                 <li ><a href="#">선박</a></li>
-                 <li ><a href="#">공급업체</a></li>
-     </ul>
-</div>
+
 <div class="grid-item" id= "side_bar">
 <div class= "myphoto">
-<div class= "myphotoin"><img src="${img}/default-user-image.png"  style="height: 250px; width: 150%; align : middle;"></div>
+	<div class= "myphotoin">
+		<form id="file_form">
+			<img src="${img}${image.imgName}.${image.imgExtention}" style="height: 200px; width: 200%;">
+			<input type="file" name="file_upload"/>
+			<input type="submit" id="file_upload_btn"/>
+			<!-- <input type="hidden" name="cmd" value="cust_file_upload"/>
+			<input type="hidden" name="page" value="detail"/> -->
+		</form>
+	</div>
+		
 </div>
 </div>
 <div class="grid-item" id= "content">
@@ -77,12 +78,22 @@ grid-column-end:5;
 	</div>
 </div>
 <div class="grid-item">
-	<span id="update_btn" class="label label-warning">수 정</span>
+	<span id="update_btn" class="label label-warning">${cus.customerName}</span>
+</div>
+<div class="grid-item1">
+	<span id="photo_btn" class="label label-warning">사진수정</span>
 </div>
 <jsp:include page="../home/bottom.jsp"/>
 
 <script>
 $('#update_btn').click(function(){
 	location.assign('${ctx}/customer.do?cmd=CUS_RETRIEVE&page=update&customerID=${cus.customerID}');
+});
+$('#file_upload_btn').attr('style','cursor:pointer').click(function(){
+	$('#file_form')
+	.attr('method','post')
+	.attr('action','${ctx}/customer.do?cmd=CUST_FILE_UPLOAD&page=detail&customer_id=${cus.customerID}')
+	.attr('enctype','multipart/form-data')
+	.submit();
 });
 </script>    
