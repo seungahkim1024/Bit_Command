@@ -60,7 +60,7 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public void removeCustomer(CustomerDTO cus) {
-		// TODO Auto-generated method stub
+		dao.deleteCustomer(cus);
 		
 	}
 	@Override
@@ -69,7 +69,7 @@ public class CustomerServiceImpl implements CustomerService{
 		return dao.selectPhone(pxy);
 	}
 	@Override
-	public void fileUpload(Proxy pxy) {
-		
+	public Map<String, Object> fileUpload(Proxy pxy) {
+		return dao.selectProfile(pxy);
 	}
 }

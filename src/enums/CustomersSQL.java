@@ -1,7 +1,7 @@
 package enums;
 // employeeId, manager, name, birthDate, photo, notes
 public enum CustomersSQL {
-	SIGNUP, SIGNIN, LIST, ROW_COUNT, PHONE, CUS_RETRIEVE, UPDATE;
+	SIGNUP, SIGNIN, LIST, ROW_COUNT, PHONE, CUS_RETRIEVE, UPDATE, UPDATE_PROFILE_IMG;
 	
 	@Override
 	public String toString() {
@@ -35,6 +35,9 @@ public enum CustomersSQL {
 			break;
 		case UPDATE:
 			query.append("UPDATE CUSTOMERS SET PHONE =?,  CITY =?, ADDRESS=?, POSTAL_CODE=?, PASSWORD=? WHERE CUSTOMER_ID = ?");
+			break;
+		case UPDATE_PROFILE_IMG:
+			query.append("UPDATE CUSTOMERS SET PHOTO = ? WHERE CUSTOMER_ID LIKE ?");
 			break;
 		default:
 			break;

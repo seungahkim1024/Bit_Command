@@ -4,8 +4,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import domain.CustomerDTO;
-import domain.ImageDTO;
 import proxy.ImageProxy;
 import proxy.Proxy;
 import proxy.RequestProxy;
@@ -24,16 +22,11 @@ public class FileCommand extends Command {
 			System.out.println("[파일커맨드 파일업로드 진입]");
 			ImageProxy ipxy = new ImageProxy();
 			ipxy.carryOut(request);
-			
-			ImageDTO image = ipxy.getImg();
-			String customerID = ipxy.getImg().getOwner();
-			CustomerDTO cus = new CustomerDTO();
-			cus.setCustomerID(customerID);
-			cus = CustomerServiceImpl
-				.getInstance()
-				.retrieveCustomer(cus);
-			request.setAttribute("image", image);
-			request.setAttribute("cus", cus);
+			Map<String, Object> map = CustomerServiceImpl
+										.getInstance()
+										.fileUpload(ipxy);
+			request.setAttribute("image", map.get("img"));
+			request.setAttribute("cus", map.get("cus"));
 			break;
 		default:
 			break;

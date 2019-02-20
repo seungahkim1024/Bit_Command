@@ -1,11 +1,13 @@
 package dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import domain.ImageDTO;
+import enums.ImageSQL;
 import enums.Vendor;
 import factory.DatabaseFactory;
 import proxy.Proxy;
@@ -13,22 +15,23 @@ import proxy.Proxy;
 public class ImageDAOImpl implements ImageDAO{
 	private static ImageDAOImpl instance = new ImageDAOImpl();
 	
-	
 	private ImageDAOImpl() {}
 	public static ImageDAOImpl getInstance() {
 		return instance;
 	}
 
-
 	@Override
 	public void insertImage(ImageDTO img) {
+		System.out.println("인서트 이미지진입!");
 		try {
-			String sql = "";
+			String sql = ImageSQL.IMG_ADD.toString();
 			PreparedStatement ps = DatabaseFactory
 			.createDatabase(Vendor.ORACLE)
 			.getConnection()
 			.prepareStatement(sql);
-			ps.setString(1, "");
+			ps.setString(1, img.getImgName());
+			ps.setString(2, img.getImgExtention());
+			ps.setString(3, img.getOwner());
 			int rs = ps.executeUpdate();
 			System.out.println((rs==1)?"입력성공":"입력실패");
 		} catch (SQLException e) {
@@ -74,18 +77,26 @@ public class ImageDAOImpl implements ImageDAO{
 
 	@Override
 	public ImageDTO selectimage(ImageDTO img) {
-		ImageDTO temp = new ImageDTO();
+		ImageDTO image = new ImageDTO();
 		try {
-			String sql = "";
-			DatabaseFactory
+			String sql = ImageSQL.SELECT_ONE_IMG.toString();
+			PreparedStatement ps = DatabaseFactory
 			.createDatabase(Vendor.ORACLE)
 			.getConnection()
 			.prepareStatement(sql);
+			ps.setString(1, img.getImgSeq());
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				image.setImgSeq(rs.getString("IMG_SEQ"));
+				image.setImgName(rs.getString("IMG_NAME"));
+				image.setImgExtention(rs.getString("IMGEXTENTION"));
+				image.setOwner(rs.getString("OWNER"));
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return temp;
+		return image;
 	}
 
 	@Override
@@ -122,8 +133,23 @@ public class ImageDAOImpl implements ImageDAO{
 	}
 	@Override
 	public String lastimageSeq() {
-		// TODO Auto-generated method stub
-		return null;
+		String seq = "";
+		try {
+			String sql = ImageSQL.IMG_LAST_SEQ.toString();
+			PreparedStatement ps = DatabaseFactory
+			.createDatabase(Vendor.ORACLE)
+			.getConnection()
+			.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				seq = rs.getString("IMG_SEQ");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return seq;
 	}
 
 }

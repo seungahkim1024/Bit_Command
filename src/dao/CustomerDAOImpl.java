@@ -217,7 +217,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 	}
 
 	@Override
-	public void deleteCustomer() {
+	public void deleteCustomer(CustomerDTO cust) {
 		try {
 			String sql = "";
 			PreparedStatement ps = DatabaseFactory
@@ -256,29 +256,45 @@ public class CustomerDAOImpl implements CustomerDAO{
 		}
 		return map;
 	}
-	public CustomerDTO selectProfile(Proxy pxy) {
+	public Map<String, Object> selectProfile(Proxy pxy) {
+		System.out.println("커스토머디티오 셀렉트 프로필 진입!");
+		Map<String, Object> map = new HashMap<>();
 		CustomerDTO cus = new CustomerDTO();
+		ImageDTO img = new ImageDTO();
 		try {
-			ImageDAOImpl.getInstance()
-			.insertImage(((ImageProxy) pxy).getImg());
+			ImageProxy ipxy = (ImageProxy) pxy; //사진 들어왔어!
+			System.out.println("DAO 넘어온 파일명: "+ipxy.getImg().getImgName());
+			System.out.println("DAO 넘어온 확장자: "+ipxy.getImg().getImgExtention());
+			System.out.println("DAO 넘어온 오너: "+ipxy.getImg().getOwner());
+			ImageDAOImpl
+			.getInstance()
+			.insertImage(ipxy.getImg()); //이미지DAO에 사진 보내서 DB에 저장!
 
 			String imgSeq = ImageDAOImpl
-					.getInstance()
-					.lastimageSeq();
-			
-			String sql = "UPDATE CUSTOMERS SET PHOTO = ?";
+							.getInstance()
+							.lastimageSeq();//DB에 저장한 이미지 SEQ 불러옴!
+			System.out.println("imgseq는: "+imgSeq);
+			String customerID = ipxy.getImg().getOwner();
+			String sql = CustomersSQL.UPDATE_PROFILE_IMG.toString();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, imgSeq);
-			
-			sql = "";
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, "");
-			ResultSet rs = ps.executeQuery();
+			ps.setString(2, customerID);
+			ps.executeUpdate();
+			img.setImgSeq(imgSeq);
+			img = ImageDAOImpl
+					.getInstance()
+					.selectimage(img);
+			cus.setCustomerID(customerID);
+			cus = selectCustomer(cus);
+			System.out.println("회원정보: "+cus.toString());
+			System.out.println("이미지정보: "+img.toString());
+			map.put("cus", cus);
+			map.put("img", img);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return cus;
-		
+		return map;
 	}
+	
 }
