@@ -1,7 +1,7 @@
 @charset "UTF-8";
 #nav{
     grid-column-start: 1;
-    grid-column-end: 5;
+    grid-column-end: 4;
 }
 #side_menu{
     grid-column-start: 1;
@@ -9,7 +9,7 @@
 }
 #content{
     grid-column-start: 2;
-    grid-column-end: 5;
+    grid-column-end: 4;
 }
 #cust_tab {
   font-family: arial, sans-serif;

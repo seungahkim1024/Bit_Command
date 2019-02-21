@@ -9,8 +9,9 @@ public enum EmployeeSQL {
 		switch (this) {
 		case REGISTER:
 			query.append("INSERT INTO EMPLOYEES(EMPLOYEE_ID, MANAGER, "
-					+ "NAME, BIRTH_DATE, PHOTO, NOTES) VALUES(" //-> DB의 컬럼명과 똑같이 입력!
-					+ " EMP_SEQ.NEXTVAL, ?, ?, ?, ?, ?)");
+					+ "NAME, BIRTH_DATE, PHOTO, NOTES) "
+					+ "VALUES(" //-> DB의 컬럼명과 똑같이 입력!
+					+ " EMP_SEQ.NEXTVAL, ?, ?, ?, '1020', ?)");
 			break;
 		case ACCESS:
 			query.append("SELECT NAME FROM EMPLOYEES "

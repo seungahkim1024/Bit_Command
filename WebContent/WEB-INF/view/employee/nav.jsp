@@ -6,7 +6,7 @@
     <li><a href="#">카테고리</a></li>
     <li><a href="#">사원</a></li>
     <li><a href="#">주문</a></li>
-    <li><a href="#">상품</a></li>
+    <li><a href="${ctx}/employee.do?cmd=PRO_LIST&dir=product&page=list">상품</a></li>
     <li><a href="#">선박</a></li>
     <li><a href="#">공급업체</a></li>
 </ul>

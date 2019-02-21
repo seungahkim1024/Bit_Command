@@ -8,33 +8,27 @@
 	<jsp:include page="../employee/nav.jsp"/>
 </div>
 <div class="grid-item" id="side_menu">
- 	<h1><font style="font-size: 30px">고객 목록</font>
+ 	<h1><font style="font-size: 30px">상품 목록</font>
  	</h1>
 </div>
 <div class="grid-item" id="content">
 	<table id="cust_tab">
 	  <tr>
-	    <th>No.</th>
-	    <th>I D</th>
-	    <th>이 름</th>
-	    <th>생년월일</th>
-	    <th>성 별</th>
-	    <th>전화번호</th>
-	    <th>우편번호</th>
-	    <th>지번주소</th>
-	    <th>상세주소</th>
+	    <th>상품 번호</th>
+	    <th>상품 이름</th>
+	    <th>제조사</th>
+	    <th>카테고리</th>
+	    <th>상세설명</th>
+	    <th>가격</th>
 	  </tr>
-	  <c:forEach items="${list}" var="cus">
+	  <c:forEach items="${proList}" var="pro">
 	  <tr>
-	    <td>${cus.no}</td>
-	    <td>${cus.customerID}</td>
-	    <td><a href="${ctx}/customer.do?cmd=cus_retrieve&page=detail&customerID=${cus.customerID}">${cus.customerName}</a></td>
-	    <td>${cus.ssn}</td>
-	    <td>남</td>
-	    <td>${cus.phone}</td>
-	    <td>${cus.postalCode}</td>
-	    <td>${cus.city}</td>
-	    <td>${cus.address}</td>
+	    <td>${pro.productId}</td>
+	    <td><a href="${ctx}/product.do?cmd=PRO_LIST&page=detail&productId=${pro.productId}">${pro.productName}</a></td>
+	    <td>${pro.supplierId}</td>
+	    <td>${pro.categoryId}</td>
+	    <td>${pro.unit}</td>
+	    <td>${pro.price}</td>
 	  </tr>
 	  </c:forEach>
 	  
@@ -43,7 +37,7 @@
 	<div class="center">
 	  <div class="pagination" >
 	  <c:if test="${pagination.existPrev}">
-		  <a href='${ctx}/customer.do?cmd=cus_list&page=list&page_num=${pagination.prevBlock}'>&laquo;</a>
+		  <a href='${ctx}/product.do?cmd=PRO_LIST&page=list&page_num=${pagination.prevBlock}'>&laquo;</a>
 	  </c:if>
 	  <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" varStatus="status">
 	  <c:choose>
@@ -57,7 +51,7 @@
 	  
 	  </c:forEach>
 	  <c:if test="${pagination.existNext}">
-		  <a href="${ctx}/customer.do?cmd=cus_list&page=list&page_num=${pagination.nextBlock}">&raquo;</a>
+		  <a href="${ctx}/product.do?cmd=PRO_LIST&page=list&page_num=${pagination.nextBlock}">&raquo;</a>
 	  </c:if>
 	  </div>
 	</div>
@@ -67,6 +61,6 @@
 
 <script>
 $('.page').click(function(){ //$옆엔 id를 줄 수 없다. 이유는 요소들이 여러가지여야하는데 아이디는 유니크하니까.
-	location.assign('${ctx}/customer.do?cmd=cus_list&page=list&page_num='+$(this).text());
+	location.assign('${ctx}/product.do?cmd=PRO_LIST&page=list&page_num='+$(this).text());
 });
 </script>

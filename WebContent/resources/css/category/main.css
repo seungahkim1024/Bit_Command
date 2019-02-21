@@ -13,16 +13,11 @@
   grid-gap: 10px;
   padding: 10px;
 }
-.grid-item{
-  background-color: white;
-  border: 1px solid rgba(0, 0, 0.8);
-  padding: 20px;
-  font-size: 30px;
-  text-align: center;
-}
-#item1{
-	grid-column-start: 1;
-	grid-column-end: 4;
+
+/* #item1{
+	grid-template-columns: auto auto auto;
+	background-color: white;
+	
 }
 #item5{
 	grid-column-start: 1;
@@ -31,7 +26,14 @@
 #item4{
 	display: grid;
  	grid-template-rows: 200px;
+} */
+
+#category{
+	grid-column-start: 1;
+	grid-column-end: 7;
+	border: 1px solid rgba(0, 0, 0.8);
 }
+
 </style>
 </head>
 <body>

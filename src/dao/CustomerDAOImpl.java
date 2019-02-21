@@ -123,7 +123,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 					.createDatabase(Vendor.ORACLE)
 					.getConnection()
 					.prepareStatement(sql);
-			ps.setString(1, cus.getCustomerID());
+			//ps.setString(1, cus.getCustomerID());
 			if(cus.getPassword()==null) {
 				ps.setString(1, cus.getCustomerID());
 			}else {
@@ -219,13 +219,14 @@ public class CustomerDAOImpl implements CustomerDAO{
 	@Override
 	public void deleteCustomer(CustomerDTO cust) {
 		try {
-			String sql = "";
+			String sql = CustomersSQL.DELETE_CUST.toString();
 			PreparedStatement ps = DatabaseFactory
 			.createDatabase(Vendor.ORACLE)
 			.getConnection()
 			.prepareStatement(sql);
-			ps.setString(1, "");
-			ps.executeUpdate();
+			ps.setString(1, cust.getCustomerID());
+			int rs = ps.executeUpdate();
+			System.out.println((rs==1) ? "입력성공" : "입력실패");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

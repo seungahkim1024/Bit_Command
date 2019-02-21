@@ -26,8 +26,8 @@ public class Commander {
 		case ACCESS: case SIGNIN:
 			cmd = new ExistCommand(pxy);
 			break;
-		case CUS_LIST:
-			System.out.println("---- cust_list-----");
+		case CUS_LIST: case PRO_LIST:
+			System.out.println("---- list-----");
 			cmd = new ListCommand(pxy);
 			break;
 		case CUS_RETRIEVE:
@@ -39,6 +39,9 @@ public class Commander {
 			break;
 		case CUST_FILE_UPLOAD:
 			cmd = new FileCommand(pxy);
+			break;
+		case CUS_DELETE:
+			cmd = new DeleteCommand(pxy);
 			break;
 		default:
 			break;

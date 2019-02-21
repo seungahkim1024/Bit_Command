@@ -80,8 +80,11 @@ grid-column-end:5;
 <div class="grid-item">
 	<span id="update_btn" class="label label-warning">${cus.customerName}</span>
 </div>
-<div class="grid-item1">
+<div class="grid-item">
 	<span id="photo_btn" class="label label-warning">사진수정</span>
+</div>
+<div class="grid-item">
+	<span id="delete_btn" class="label label-warning">회원탈퇴</span>
 </div>
 <jsp:include page="../home/bottom.jsp"/>
 
@@ -95,5 +98,8 @@ $('#file_upload_btn').attr('style','cursor:pointer').click(function(){
 	.attr('action','${ctx}/customer.do?cmd=CUST_FILE_UPLOAD&page=detail&customer_id=${cus.customerID}')
 	.attr('enctype','multipart/form-data')
 	.submit();
+});
+$('#delete_btn').click(function(){
+	location.assign('${ctx}/customer.do?cmd=CUS_DELETE&dir=home&page=main&customerID=${cus.customerID}');
 });
 </script>    
